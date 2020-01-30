@@ -18,12 +18,16 @@ fname = ret[0].strip('.cpp')
 
 cmd = "g++ -std=c++11 {0}.cpp -o {0}.exe".format(fname)
 print(cmd)
+err = False
 with sp.Popen(cmd.split(), stdout=sp.PIPE, stderr=sp.PIPE) as proc:
     stdout = proc.stdout.read().decode('utf-8')
     stderr = proc.stderr.read().decode('utf-8')
     if (stdout != ''): print(stdout)
-    if (stderr != ''): print(stderr)
+    if (stderr != ''):
+        print(stderr)
+        err = True
 
-cmd = "./{}.exe".format(fname)
-print(cmd)
-sp.call([cmd])
+if not err:
+    cmd = "./{}.exe".format(fname)
+    print(cmd)
+    sp.call([cmd])
