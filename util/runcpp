@@ -12,9 +12,12 @@ ret = glob(args.target+"*.cpp")
 if len(ret) == 0:
     raise ValueError("{}*.cpp is not found".format(args.target))
 elif len(ret) > 1:
-    raise ValueError("{} are found".format(ret))
+    for s in ret:
+        if '.' not in s.split(".cpp")[0]:
+            ret = [s]
+    #raise ValueError("{} are found".format(ret))
 
-fname = ret[0].strip('.cpp')
+fname = ret[0].split('.cpp')[0]
 
 cmd = "g++ -std=c++11 {0}.cpp -o {0}.exe".format(fname)
 print(cmd)
